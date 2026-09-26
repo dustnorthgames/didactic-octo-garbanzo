@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Usher Referendum — Control Room</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="control-page">
+  <header class="control-header">
+    <div>
+      <div class="eyebrow">USHER REFERENDUM STUDIO</div>
+      <h1>Control Room</h1>
+      <p id="dataStatus" class="header-sub">Loading all 650 constituency declaration areas…</p>
+    </div>
+    <div class="header-actions">
+      <a href="presentation.html" target="_blank" class="button ghost">Open Presentation ↗</a>
+      <button id="newReferendumBtn" class="button danger">New Referendum</button>
+    </div>
+  </header>
+
+  <main class="control-layout">
+    <section class="control-panel setup-panel">
+      <div class="panel-title">Referendum setup</div>
+
+      <div class="form-grid three">
+        <label>Referendum year
+          <select id="yearSelect"></select>
+        </label>
+
+        <label>Broadcast era
+          <select id="themeSelect">
+            <option value="auto">Automatic from year</option>
+            <option value="1997">1997</option>
+            <option value="2001">2001</option>
+            <option value="2010">2010</option>
+            <option value="2016">2016</option>
+            <option value="2024">2024</option>
+          </select>
+        </label>
+
+        <label>Declaration order
+          <select id="declarationOrder">
+            <option value="alphabetical">Alphabetical</option>
+            <option value="random">Random</option>
+            <option value="closest">Closest result first</option>
+            <option value="landslide">Biggest landslide first</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="referendum-target-grid">
+        <div class="referendum-target in-target">
+          <div class="side-label">IN</div>
+          <div class="side-meaning">Remain in the United Kingdom</div>
+          <output id="inTargetOutput">48.0%</output>
+          <input id="inTarget" type="range" min="25" max="75" step="0.1" value="48">
+        </div>
+
+        <div class="referendum-target out-target">
+          <div class="side-label">OUT</div>
+          <div class="side-meaning">Usher becomes independent</div>
+          <output id="outTargetOutput">52.0%</output>
+          <div class="fake-range"><span id="outRangeFill"></span></div>
+        </div>
+
+        <div class="turnout-target">
+          <div class="side-label smaller">TURNOUT</div>
+          <output id="turnoutTargetOutput">71.0%</output>
+          <input id="turnoutTarget" type="range" min="35" max="90" step="0.1" value="71">
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="generateBtn" class="button primary">Generate referendum</button>
+        <button id="countdownBtn" class="button accent">10-second opener</button>
+        <button id="projectionBtn" class="button">Exit poll / projection</button>
+        <button id="mapBtn" class="button">650 map</button>
+        <button id="nationalBtn" class="button">National result</button>
+        <button id="winnerBtn" class="button warning">Declare winner</button>
+      </div>
+    </section>
+
+    <section class="control-panel">
+      <div class="panel-title">Sound desk</div>
+      <p class="muted">Original synthetic broadcast stings. Enable sound once on the Presentation screen.</p>
+      <div class="sound-grid">
+        <button class="button sting" data-sting="intro">Intro</button>
+        <button class="button sting" data-sting="projection">Projection</button>
+        <button class="button sting" data-sting="declaration">Declaration</button>
+        <button class="button sting" data-sting="breaking">Breaking</button>
+        <button class="button sting" data-sting="winner">Winner</button>
+        <button class="button sting" data-sting="countdown">Countdown tick</button>
+      </div>
+    </section>
+
+    <section class="control-panel">
+      <div class="panel-title">Live straps</div>
+      <div class="form-grid">
+        <label>Ticker
+          <input id="tickerInput" type="text" value="Usher decides whether to remain in the UK or become independent.">
+        </label>
+        <label>Breaking headline
+          <input id="headlineInput" type="text" value="Referendum night develops across Usher">
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="breakingBtn" class="button warning">Breaking screen</button>
+        <button id="analysisBtn" class="button">Analysis screen</button>
+        <button id="turnoutBtn" class="button">Turnout screen</button>
+      </div>
+    </section>
+
+    <section class="control-panel declaration-panel">
+      <div class="panel-heading-row">
+        <div>
+          <div class="panel-title">Constituency declarations</div>
+          <p class="muted">All 650 current UK parliamentary constituency names are used as local referendum declaration areas.</p>
+        </div>
+        <div class="declaration-count" id="declarationCount">0 / 650</div>
+      </div>
+
+      <div class="button-row declaration-actions">
+        <button id="nextDeclarationBtn" class="button primary">Declare next</button>
+        <button id="randomDeclarationBtn" class="button">Random area</button>
+        <button id="declareFiveBtn" class="button">Declare 5</button>
+        <button id="declareTwentyBtn" class="button">Declare 20</button>
+        <button id="declareAllBtn" class="button warning">Declare all</button>
+      </div>
+
+      <div class="seat-tools">
+        <input id="seatSearch" type="search" placeholder="Search all 650 constituencies…">
+        <select id="seatFilter">
+          <option value="all">All areas</option>
+          <option value="undeclared">Undeclared</option>
+          <option value="declared">Declared</option>
+          <option value="in">IN declarations</option>
+          <option value="out">OUT declarations</option>
+        </select>
+      </div>
+
+      <div class="declaration-workspace">
+        <div id="declarationList" class="declaration-list"></div>
+        <aside class="history-panel">
+          <div class="mini-title">Declaration history</div>
+          <div id="historyList" class="history-list"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="control-panel map-control-panel">
+      <div class="panel-heading-row">
+        <div>
+          <div class="panel-title">650-area referendum map</div>
+          <p class="muted">Equal-area hex display: yellow = IN, blue = OUT, grey = undeclared.</p>
+        </div>
+        <div class="map-legend">
+          <span class="legend-item"><i class="legend-dot in-dot"></i>IN</span>
+          <span class="legend-item"><i class="legend-dot out-dot"></i>OUT</span>
+          <span class="legend-item"><i class="legend-dot undec-dot"></i>Undeclared</span>
+        </div>
+      </div>
+      <div id="controlHexMap" class="hex-map control-map"></div>
+      <div id="mapTooltip" class="map-tooltip hidden"></div>
+    </section>
+
+    <section class="control-panel live-panel">
+      <div class="panel-title">Live national picture</div>
+      <div class="national-live-grid">
+        <div class="live-side in">
+          <span>IN</span>
+          <strong id="liveInPct">—</strong>
+          <small id="liveInAreas">0 areas</small>
+        </div>
+        <div class="live-middle">
+          <span>DECLARED</span>
+          <strong id="liveDeclared">0</strong>
+          <small>of 650</small>
+        </div>
+        <div class="live-side out">
+          <span>OUT</span>
+          <strong id="liveOutPct">—</strong>
+          <small id="liveOutAreas">0 areas</small>
+        </div>
+      </div>
+
+      <div class="national-bar">
+        <div id="liveInBar" class="national-in"></div>
+        <div id="liveOutBar" class="national-out"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>UsherReferendum.initControlRoom();</script>
+</body>
+</html>

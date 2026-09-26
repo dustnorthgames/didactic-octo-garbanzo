@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Usher Referendum — Presentation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="presentation-page">
+  <div id="presentation" class="presentation-stage theme-2024">
+    <header class="broadcast-topbar">
+      <div class="broadcast-brand">USHER <b>REFERENDUM</b></div>
+      <div id="eraChip" class="era-chip">2024 STYLE</div>
+      <div class="top-spacer"></div>
+      <button id="soundUnlock" class="sound-unlock">🔊 Enable sound</button>
+      <div class="live-pill">LIVE</div>
+      <div id="yearChip" class="year-chip">2026</div>
+    </header>
+
+    <main id="slideMount" class="slide-mount"></main>
+
+    <div class="ticker-strip">
+      <div class="ticker-label">LIVE</div>
+      <div id="tickerText" class="ticker-text">Usher decides whether to remain in the UK or become independent.</div>
+    </div>
+
+    <footer class="broadcast-footer">
+      <div id="declaredFooter">0 / 650 declared</div>
+      <div id="nationalFooter">IN — · OUT —</div>
+      <div id="leaderFooter">Leader: —</div>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>UsherReferendum.initPresentation();</script>
+</body>
+</html>
